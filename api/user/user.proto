@@ -7,24 +7,81 @@ option go_package = "api/user;user";
 // UserService 定义
 service UserService {
   // 用户注册
-  rpc Register(RegisterRequest) returns (RegisterResponse); // no auth
+  rpc RegisterStudent(RegisterStudentRequest) returns (RegisterStudentResponse); // admin auth 内部调用
+  rpc RegisterTeacher(RegisterTeacherRequest) returns (RegisterTeacherResponse); // admin auth 内部调用
+
   // 用户登录
   rpc Login(LoginRequest) returns (LoginResponse); // no auth
+  // 获取用户信息
+  rpc UserInfo(UserInfoRequest) returns (UserInfoResponse); // user auth
 
-  rpc UserInfo(UserInfoRequest) returns (UserInfoResponse);
+  // 更新用户头像
+  rpc UpdateUserAvatar(UpdateUserAvatarRequest) returns (UpdateUserAvatarResponse); // user auth
 }
 
-message RegisterRequest {
+message RegisterStudentRequest {
   string name = 1;
+  // 姓名 / 名前
+
   string name_kana = 2;
-  string avatar = 3; // 可选
+  // 假名 / フリガナ
+
+  string avatar = 3;
+  // 头像URL（可选）/ アバター画像URL（オプション）
+
   string email = 4;
+  // 邮箱 / メールアドレス
+
   string phone = 5;
+  // 手机号 / 携帯電話番号
+
   string password = 6;
+  // 密码 / パスワード
+
   string device_id = 7;
+  // 设备ID / デバイスID
+
+  string student_number = 8;
+  // 学籍番号 / 学籍番号
+
+  string department = 9;
+  // 学系 / 学部
+
+  string major = 10;
+  // 学科 / 学科
+
+  int64 enrollment_date = 11;
+  // 入学日期（Unix时间戳）/ 入学日（Unixタイムスタンプ）
+
+  int64 graduation_date = 12;
+  // 毕业日期（Unix时间戳，可选）/ 卒業日（Unixタイムスタンプ、オプション）
+
+  int64 birthday = 13;
+  // 出生日期（Unix时间戳）/ 生年月日（Unixタイムスタンプ）
+
+  string gender = 14;
+  // 性别（male、female、other）/ 性別（male＝男性、female＝女性、other＝その他）
+
+  string birth_place = 15;
+  // 出生地 / 出生地
+
+  string address = 16;
+  // 现住地址 / 現住所
+
+  string emergency_contact_name = 17;
+  // 紧急联系人姓名 / 緊急連絡先氏名
+
+  string emergency_contact_phone = 18;
+  // 紧急联系人电话 / 緊急連絡先電話番号
+
+  string emergency_contact_relation = 19;
+  // 紧急联系人关系 / 緊急連絡先との関係
+
+  string emergency_contact_address = 20;
+  // 紧急联系人地址 / 緊急連絡先住所
 }
 
-message RegisterResponse {}
+message RegisterStudentResponse {}
 
 message LoginRequest {
   string email = 1;
@@ -45,6 +102,85 @@ message UserInfoResponse {
   string phone = 5;
   string role = 6;
   string audit_status = 7;
+  StudentInfo student_info = 8;
+  TeacherInfo teacher_info = 9;
+}
+message StudentInfo {
+  string student_number = 1;
+  // 学籍番号 / 学籍番号
+
+  string department = 2;
+  // 学系 / 学部
+
+  string major = 3;
+  // 学科 / 学科
+
+  int64 enrollment_date = 4;
+  // 入学日期（Unix时间戳）/ 入学日（Unixタイムスタンプ）
+
+  int64 graduation_date = 5;
+  // 毕业日期（Unix时间戳，可选）/ 卒業日（Unixタイムスタンプ、オプション）
+
+  int64 birthday = 6;
+  // 出生日期（Unix时间戳）/ 生年月日（Unixタイムスタンプ）
+
+  string gender = 7;
+  // 性别（male、female、other）/ 性別（male＝男性、female＝女性、other＝その他）
+
+  string birth_place = 8;
+  // 出生地 / 出生地
+
+  string address = 9;
+  // 现住地址 / 現住所
+
+  string emergency_contact_name = 10;
+  // 紧急联系人姓名 / 緊急連絡先氏名
+
+  string emergency_contact_phone = 11;
+  // 紧急联系人电话 / 緊急連絡先電話番号
+
+  string emergency_contact_relation = 12;
+  // 紧急联系人关系 / 緊急連絡先との関係
+
+  string emergency_contact_address = 13;
+  // 紧急联系人地址 / 緊急連絡先住所
 }
 
+message TeacherInfo {
+  string introduction = 1;
+  // 教师简介 / 教員紹介
+}
 
+message UpdateUserAvatarRequest {
+  string avatar = 1;
+}
+
+message UpdateUserAvatarResponse {}
+
+message RegisterTeacherRequest {
+  string name = 1;
+  // 姓名 / 名前
+
+  string name_kana = 2;
+  // 假名 / フリガナ
+
+  string avatar = 3;
+  // 头像URL（可选）/ アバター画像URL（オプション）
+
+  string email = 4;
+  // 邮箱 / メールアドレス
+
+  string phone = 5;
+  // 手机号 / 携帯電話番号
+
+  string password = 6;
+  // 密码 / パスワード
+
+  string introduction = 7;
+  // 教师简介 / 教員紹介
+
+  string teacher_number = 8;
+  // 教师番号 / 教員番号
+}
+
+message RegisterTeacherResponse {}

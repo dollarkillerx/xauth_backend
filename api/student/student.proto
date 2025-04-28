@@ -1,0 +1,5 @@
+syntax = "proto3";
+
+package student;
+
+option go_package = "api/student;student";

@@ -19,4 +19,10 @@ type Setting struct {
 
 	RestrictClockInIP bool `gorm:"default:false;not null" json:"restrict_clockin_ip"`
 	// 是否限制打卡IP / 打刻IP制限（true＝制限、false＝自由）
+
+	RestrictIPList string `gorm:"type:text" json:"restrict_ip_list"`
+	// 限制的打卡IP列表（多个IP用逗号分隔）/ 打刻許可IPリスト（カンマ区切り）
+
+	RestrictEmailDomain bool `gorm:"default:false;not null" json:"restrict_email_domain"`
+	// 是否开启邮箱后缀注册限制 / メールドメイン制限登録を有効にする（true＝有効、false＝無効）
 }

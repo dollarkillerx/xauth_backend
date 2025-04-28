@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package setting;
+
+option go_package = "api/setting;setting";
+
+service SettingService {
+  rpc GetSetting(GetSettingRequest) returns (GetSettingResponse); // no auth
+}
+
+message GetSettingRequest {
+}
+
+message GetSettingResponse {
+  string school_name = 1;              // 学校名称 / 学校名
+  string principal_name = 2;            // 校长姓名 / 校長名
+  string email_domain = 3;              // 邮箱后缀 / メールドメイン（例：@school.jp）
+  bool allow_register = 4;              // 是否允许注册 / 登録許可
+  bool allow_change_device = 5;          // 是否允许更换登录设备 / デバイス変更許可
+  bool restrict_clock_in_ip = 6;         // 是否限制打卡IP / 打刻IP制限
+  string restrict_ip_list = 7;           // 限制打卡IP列表（逗号分隔）/ 打刻許可IPリスト（カンマ区切り）
+  bool restrict_email_domain = 8;        // 是否开启邮箱后缀注册限制 / メールドメイン制限登録を有効にする
+}
