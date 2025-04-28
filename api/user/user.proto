@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+package user;
+
+option go_package = "api/user;user";
+
+// UserService 定义
+service UserService {
+  // 用户注册
+  rpc Register(RegisterRequest) returns (RegisterResponse);
+
+  // 用户登录
+  rpc Login(LoginRequest) returns (LoginResponse);
+
+  // 根据用户ID查询用户信息
+  rpc GetUserInfo(GetUserInfoRequest) returns (GetUserInfoResponse);
+}
+
+// 用户数据结构
+message User {
+  int64 id = 1;
+  string username = 2;
+  string email = 3;
+}
+
+// ====== 请求 & 响应结构 ======
+
+// 注册
+message RegisterRequest {
+  string username = 1;
+  string password = 2;
+  string email = 3;
+}
+
+message RegisterResponse {
+  int64 id = 1;
+  string message = 2;
+}
+
+// 登录
+message LoginRequest {
+  string username = 1;
+  string password = 2;
+}
+
+message LoginResponse {
+  string token = 1;
+  string message = 2;
+}
+
+// 查询用户信息
+message GetUserInfoRequest {
+  int64 id = 1;
+}
+
+message GetUserInfoResponse {
+  User user = 1;
+}
