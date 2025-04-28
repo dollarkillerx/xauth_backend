@@ -4,6 +4,5 @@ dev:
 build:
 	bash cmd/build.sh
 
-
 generate_grpc:
-	protoc --go_out=. --go-grpc_out=. api/user/user.proto
+	protoc --go_out=. --go-grpc_out=. api/*/*.proto
