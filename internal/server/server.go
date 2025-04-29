@@ -1,13 +1,14 @@
 package server
 
 import (
-	"fmt"
 	"github.com/dollarkillerx/xauth_backend/api/user"
 	"github.com/dollarkillerx/xauth_backend/internal/conf"
+	"github.com/dollarkillerx/xauth_backend/internal/middleware"
 	"github.com/dollarkillerx/xauth_backend/internal/storage"
 	userServer "github.com/dollarkillerx/xauth_backend/internal/user"
 	"google.golang.org/grpc"
 
+	"fmt"
 	"log"
 	"net"
 )
@@ -27,7 +28,9 @@ func (s *Server) Run() error {
 		log.Fatalf("failed to listen: %v", err)
 	}
 
-	server := grpc.NewServer()
+	server := grpc.NewServer(
+		grpc.UnaryInterceptor(middleware.UnaryServerInterceptor),
+	)
 	user.RegisterUserServiceServer(server, &userServer.UserService{
 		Storage: s.storage,
 		Conf:    s.conf,
