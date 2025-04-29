@@ -1,6 +1,7 @@
 package server
 
 import (
+	"fmt"
 	"github.com/dollarkillerx/xauth_backend/api/user"
 	"github.com/dollarkillerx/xauth_backend/internal/conf"
 	"github.com/dollarkillerx/xauth_backend/internal/storage"
@@ -21,7 +22,7 @@ func NewServer(storage *storage.Storage, conf *conf.Config) *Server {
 }
 
 func (s *Server) Run() error {
-	lis, err := net.Listen("tcp", s.conf.ServiceConfiguration.Port)
+	lis, err := net.Listen("tcp", fmt.Sprintf(":%s", s.conf.ServiceConfiguration.Port))
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
@@ -32,7 +33,7 @@ func (s *Server) Run() error {
 		Conf:    s.conf,
 	})
 
-	log.Println("gRPC server is running on port 50051")
+	log.Println("gRPC server is running on port " + s.conf.ServiceConfiguration.Port)
 	if err := server.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
 	}

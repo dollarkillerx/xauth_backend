@@ -4,6 +4,7 @@ import "time"
 
 type Student struct {
 	BaseModel
+
 	StudentNumber string `gorm:"type:varchar(50);uniqueIndex;not null" json:"student_number"`
 	// 学籍番号 / 学籍番号（がくせきばんごう）
 
@@ -14,16 +15,16 @@ type Student struct {
 	// 学科 / 学科（がっか）
 
 	EnrollmentDate time.Time `gorm:"not null" json:"enrollment_date"`
-	// 利用开始日期（入学日期）/ 利用開始日（入学日）
+	// 入学日期 / 入学日（にゅうがくび）
 
 	GraduationDate *time.Time `json:"graduation_date"`
-	// 利用结束日期（毕业日期，可为空）/ 利用終了日（卒業日、NULL可）
+	// 毕业日期（可为空）/ 卒業日（NULL可）
 
 	Birthday time.Time `gorm:"not null" json:"birthday"`
 	// 出生日期 / 生年月日（せいねんがっぴ）
 
-	Gender string `gorm:"type:enum('male','female','other');not null" json:"gender"`
-	// 性别（male=男，female=女，other=其他）/ 性別（male=男性、female=女性、other=その他）
+	Gender string `gorm:"type:varchar(10);not null" json:"gender"`
+	// 性别（male=男，female=女，other=其他）/ 性別（male＝男性、female＝女性、other＝その他）
 
 	BirthPlace string `gorm:"type:varchar(255);not null" json:"birth_place"`
 	// 出生地 / 出生地（しゅっしょうち）

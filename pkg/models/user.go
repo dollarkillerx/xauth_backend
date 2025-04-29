@@ -18,9 +18,9 @@ type User struct {
 	// 手机号（登录用，唯一）/ 携帯電話番号（ログイン用、一意）
 	Password string `gorm:"type:varchar(255);not null" json:"password"`
 	// 加密后的密码 / 暗号化されたパスワード
-	Role string `gorm:"type:enum('admin','student','teacher','guardian');not null" json:"role"`
+	Role string `gorm:"type:varchar(20);not null" json:"role"`
 	// 角色类型（admin=管理员，student=学生，teacher=教师，guardian=监护人）/ 役割タイプ（admin=管理者、student=学生、teacher=教師、guardian=保護者）
-	AuditStatus string `gorm:"type:enum('pending','pass','reject','disabled');default:'pending';not null" json:"audit_status"`
+	AuditStatus string `gorm:"type:varchar(20);default:'pending';not null" json:"audit_status"`
 	// 审核状态（pending=待审核，pass=通过，reject=拒绝，disabled=禁用）/ 審査ステータス（pending=審査待ち、pass=承認、reject=却下、disabled=無効化）
 	LastLoginAt time.Time `json:"last_login_at"`
 	// 最后登录时间 / 最終ログイン日時
