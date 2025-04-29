@@ -21,33 +21,46 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type RegisterRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	NameKana      string                 `protobuf:"bytes,2,opt,name=name_kana,json=nameKana,proto3" json:"name_kana,omitempty"`
-	Avatar        string                 `protobuf:"bytes,3,opt,name=avatar,proto3" json:"avatar,omitempty"` // 可选
-	Email         string                 `protobuf:"bytes,4,opt,name=email,proto3" json:"email,omitempty"`
-	Phone         string                 `protobuf:"bytes,5,opt,name=phone,proto3" json:"phone,omitempty"`
-	Password      string                 `protobuf:"bytes,6,opt,name=password,proto3" json:"password,omitempty"`
-	DeviceId      string                 `protobuf:"bytes,7,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+type RegisterStudentRequest struct {
+	state                    protoimpl.MessageState `protogen:"open.v1"`
+	Name                     string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`                                                                            // 姓名 / 名前
+	NameKana                 string                 `protobuf:"bytes,2,opt,name=name_kana,json=nameKana,proto3" json:"name_kana,omitempty"`                                                    // 假名 / フリガナ
+	Avatar                   string                 `protobuf:"bytes,3,opt,name=avatar,proto3" json:"avatar,omitempty"`                                                                        // 头像URL（可选）/ アバター画像URL（オプション）
+	Email                    string                 `protobuf:"bytes,4,opt,name=email,proto3" json:"email,omitempty"`                                                                          // 邮箱 / メールアドレス
+	Phone                    string                 `protobuf:"bytes,5,opt,name=phone,proto3" json:"phone,omitempty"`                                                                          // 手机号 / 携帯電話番号
+	Password                 string                 `protobuf:"bytes,6,opt,name=password,proto3" json:"password,omitempty"`                                                                    // 密码 / パスワード
+	DeviceId                 string                 `protobuf:"bytes,7,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`                                                    // 设备ID / デバイスID
+	StudentNumber            string                 `protobuf:"bytes,8,opt,name=student_number,json=studentNumber,proto3" json:"student_number,omitempty"`                                     // 学籍番号 / 学籍番号
+	Department               string                 `protobuf:"bytes,9,opt,name=department,proto3" json:"department,omitempty"`                                                                // 学系 / 学部
+	Major                    string                 `protobuf:"bytes,10,opt,name=major,proto3" json:"major,omitempty"`                                                                         // 学科 / 学科
+	EnrollmentDate           int64                  `protobuf:"varint,11,opt,name=enrollment_date,json=enrollmentDate,proto3" json:"enrollment_date,omitempty"`                                // 入学日期（Unix时间戳）/ 入学日（Unixタイムスタンプ）
+	GraduationDate           int64                  `protobuf:"varint,12,opt,name=graduation_date,json=graduationDate,proto3" json:"graduation_date,omitempty"`                                // 毕业日期（Unix时间戳，可选）/ 卒業日（Unixタイムスタンプ、オプション）
+	Birthday                 int64                  `protobuf:"varint,13,opt,name=birthday,proto3" json:"birthday,omitempty"`                                                                  // 出生日期（Unix时间戳）/ 生年月日（Unixタイムスタンプ）
+	Gender                   string                 `protobuf:"bytes,14,opt,name=gender,proto3" json:"gender,omitempty"`                                                                       // 性别（male、female、other）/ 性別（male＝男性、female＝女性、other＝その他）
+	BirthPlace               string                 `protobuf:"bytes,15,opt,name=birth_place,json=birthPlace,proto3" json:"birth_place,omitempty"`                                             // 出生地 / 出生地
+	Address                  string                 `protobuf:"bytes,16,opt,name=address,proto3" json:"address,omitempty"`                                                                     // 现住地址 / 現住所
+	EmergencyContactName     string                 `protobuf:"bytes,17,opt,name=emergency_contact_name,json=emergencyContactName,proto3" json:"emergency_contact_name,omitempty"`             // 紧急联系人姓名 / 緊急連絡先氏名
+	EmergencyContactPhone    string                 `protobuf:"bytes,18,opt,name=emergency_contact_phone,json=emergencyContactPhone,proto3" json:"emergency_contact_phone,omitempty"`          // 紧急联系人电话 / 緊急連絡先電話番号
+	EmergencyContactRelation string                 `protobuf:"bytes,19,opt,name=emergency_contact_relation,json=emergencyContactRelation,proto3" json:"emergency_contact_relation,omitempty"` // 紧急联系人关系 / 緊急連絡先との関係
+	EmergencyContactAddress  string                 `protobuf:"bytes,20,opt,name=emergency_contact_address,json=emergencyContactAddress,proto3" json:"emergency_contact_address,omitempty"`    // 紧急联系人地址 / 緊急連絡先住所
+	unknownFields            protoimpl.UnknownFields
+	sizeCache                protoimpl.SizeCache
 }
 
-func (x *RegisterRequest) Reset() {
-	*x = RegisterRequest{}
+func (x *RegisterStudentRequest) Reset() {
+	*x = RegisterStudentRequest{}
 	mi := &file_api_user_user_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *RegisterRequest) String() string {
+func (x *RegisterStudentRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*RegisterRequest) ProtoMessage() {}
+func (*RegisterStudentRequest) ProtoMessage() {}
 
-func (x *RegisterRequest) ProtoReflect() protoreflect.Message {
+func (x *RegisterStudentRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_api_user_user_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -59,80 +72,171 @@ func (x *RegisterRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use RegisterRequest.ProtoReflect.Descriptor instead.
-func (*RegisterRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use RegisterStudentRequest.ProtoReflect.Descriptor instead.
+func (*RegisterStudentRequest) Descriptor() ([]byte, []int) {
 	return file_api_user_user_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *RegisterRequest) GetName() string {
+func (x *RegisterStudentRequest) GetName() string {
 	if x != nil {
 		return x.Name
 	}
 	return ""
 }
 
-func (x *RegisterRequest) GetNameKana() string {
+func (x *RegisterStudentRequest) GetNameKana() string {
 	if x != nil {
 		return x.NameKana
 	}
 	return ""
 }
 
-func (x *RegisterRequest) GetAvatar() string {
+func (x *RegisterStudentRequest) GetAvatar() string {
 	if x != nil {
 		return x.Avatar
 	}
 	return ""
 }
 
-func (x *RegisterRequest) GetEmail() string {
+func (x *RegisterStudentRequest) GetEmail() string {
 	if x != nil {
 		return x.Email
 	}
 	return ""
 }
 
-func (x *RegisterRequest) GetPhone() string {
+func (x *RegisterStudentRequest) GetPhone() string {
 	if x != nil {
 		return x.Phone
 	}
 	return ""
 }
 
-func (x *RegisterRequest) GetPassword() string {
+func (x *RegisterStudentRequest) GetPassword() string {
 	if x != nil {
 		return x.Password
 	}
 	return ""
 }
 
-func (x *RegisterRequest) GetDeviceId() string {
+func (x *RegisterStudentRequest) GetDeviceId() string {
 	if x != nil {
 		return x.DeviceId
 	}
 	return ""
 }
 
-type RegisterResponse struct {
+func (x *RegisterStudentRequest) GetStudentNumber() string {
+	if x != nil {
+		return x.StudentNumber
+	}
+	return ""
+}
+
+func (x *RegisterStudentRequest) GetDepartment() string {
+	if x != nil {
+		return x.Department
+	}
+	return ""
+}
+
+func (x *RegisterStudentRequest) GetMajor() string {
+	if x != nil {
+		return x.Major
+	}
+	return ""
+}
+
+func (x *RegisterStudentRequest) GetEnrollmentDate() int64 {
+	if x != nil {
+		return x.EnrollmentDate
+	}
+	return 0
+}
+
+func (x *RegisterStudentRequest) GetGraduationDate() int64 {
+	if x != nil {
+		return x.GraduationDate
+	}
+	return 0
+}
+
+func (x *RegisterStudentRequest) GetBirthday() int64 {
+	if x != nil {
+		return x.Birthday
+	}
+	return 0
+}
+
+func (x *RegisterStudentRequest) GetGender() string {
+	if x != nil {
+		return x.Gender
+	}
+	return ""
+}
+
+func (x *RegisterStudentRequest) GetBirthPlace() string {
+	if x != nil {
+		return x.BirthPlace
+	}
+	return ""
+}
+
+func (x *RegisterStudentRequest) GetAddress() string {
+	if x != nil {
+		return x.Address
+	}
+	return ""
+}
+
+func (x *RegisterStudentRequest) GetEmergencyContactName() string {
+	if x != nil {
+		return x.EmergencyContactName
+	}
+	return ""
+}
+
+func (x *RegisterStudentRequest) GetEmergencyContactPhone() string {
+	if x != nil {
+		return x.EmergencyContactPhone
+	}
+	return ""
+}
+
+func (x *RegisterStudentRequest) GetEmergencyContactRelation() string {
+	if x != nil {
+		return x.EmergencyContactRelation
+	}
+	return ""
+}
+
+func (x *RegisterStudentRequest) GetEmergencyContactAddress() string {
+	if x != nil {
+		return x.EmergencyContactAddress
+	}
+	return ""
+}
+
+type RegisterStudentResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *RegisterResponse) Reset() {
-	*x = RegisterResponse{}
+func (x *RegisterStudentResponse) Reset() {
+	*x = RegisterStudentResponse{}
 	mi := &file_api_user_user_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *RegisterResponse) String() string {
+func (x *RegisterStudentResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*RegisterResponse) ProtoMessage() {}
+func (*RegisterStudentResponse) ProtoMessage() {}
 
-func (x *RegisterResponse) ProtoReflect() protoreflect.Message {
+func (x *RegisterStudentResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_api_user_user_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -144,8 +248,8 @@ func (x *RegisterResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use RegisterResponse.ProtoReflect.Descriptor instead.
-func (*RegisterResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use RegisterStudentResponse.ProtoReflect.Descriptor instead.
+func (*RegisterStudentResponse) Descriptor() ([]byte, []int) {
 	return file_api_user_user_proto_rawDescGZIP(), []int{1}
 }
 
@@ -298,6 +402,8 @@ type UserInfoResponse struct {
 	Phone         string                 `protobuf:"bytes,5,opt,name=phone,proto3" json:"phone,omitempty"`
 	Role          string                 `protobuf:"bytes,6,opt,name=role,proto3" json:"role,omitempty"`
 	AuditStatus   string                 `protobuf:"bytes,7,opt,name=audit_status,json=auditStatus,proto3" json:"audit_status,omitempty"`
+	StudentInfo   *StudentInfo           `protobuf:"bytes,8,opt,name=student_info,json=studentInfo,proto3" json:"student_info,omitempty"`
+	TeacherInfo   *TeacherInfo           `protobuf:"bytes,9,opt,name=teacher_info,json=teacherInfo,proto3" json:"teacher_info,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -381,27 +487,458 @@ func (x *UserInfoResponse) GetAuditStatus() string {
 	return ""
 }
 
+func (x *UserInfoResponse) GetStudentInfo() *StudentInfo {
+	if x != nil {
+		return x.StudentInfo
+	}
+	return nil
+}
+
+func (x *UserInfoResponse) GetTeacherInfo() *TeacherInfo {
+	if x != nil {
+		return x.TeacherInfo
+	}
+	return nil
+}
+
+type StudentInfo struct {
+	state                    protoimpl.MessageState `protogen:"open.v1"`
+	StudentNumber            string                 `protobuf:"bytes,1,opt,name=student_number,json=studentNumber,proto3" json:"student_number,omitempty"`                                     // 学籍番号 / 学籍番号
+	Department               string                 `protobuf:"bytes,2,opt,name=department,proto3" json:"department,omitempty"`                                                                // 学系 / 学部
+	Major                    string                 `protobuf:"bytes,3,opt,name=major,proto3" json:"major,omitempty"`                                                                          // 学科 / 学科
+	EnrollmentDate           int64                  `protobuf:"varint,4,opt,name=enrollment_date,json=enrollmentDate,proto3" json:"enrollment_date,omitempty"`                                 // 入学日期（Unix时间戳）/ 入学日（Unixタイムスタンプ）
+	GraduationDate           int64                  `protobuf:"varint,5,opt,name=graduation_date,json=graduationDate,proto3" json:"graduation_date,omitempty"`                                 // 毕业日期（Unix时间戳，可选）/ 卒業日（Unixタイムスタンプ、オプション）
+	Birthday                 int64                  `protobuf:"varint,6,opt,name=birthday,proto3" json:"birthday,omitempty"`                                                                   // 出生日期（Unix时间戳）/ 生年月日（Unixタイムスタンプ）
+	Gender                   string                 `protobuf:"bytes,7,opt,name=gender,proto3" json:"gender,omitempty"`                                                                        // 性别（male、female、other）/ 性別（male＝男性、female＝女性、other＝その他）
+	BirthPlace               string                 `protobuf:"bytes,8,opt,name=birth_place,json=birthPlace,proto3" json:"birth_place,omitempty"`                                              // 出生地 / 出生地
+	Address                  string                 `protobuf:"bytes,9,opt,name=address,proto3" json:"address,omitempty"`                                                                      // 现住地址 / 現住所
+	EmergencyContactName     string                 `protobuf:"bytes,10,opt,name=emergency_contact_name,json=emergencyContactName,proto3" json:"emergency_contact_name,omitempty"`             // 紧急联系人姓名 / 緊急連絡先氏名
+	EmergencyContactPhone    string                 `protobuf:"bytes,11,opt,name=emergency_contact_phone,json=emergencyContactPhone,proto3" json:"emergency_contact_phone,omitempty"`          // 紧急联系人电话 / 緊急連絡先電話番号
+	EmergencyContactRelation string                 `protobuf:"bytes,12,opt,name=emergency_contact_relation,json=emergencyContactRelation,proto3" json:"emergency_contact_relation,omitempty"` // 紧急联系人关系 / 緊急連絡先との関係
+	EmergencyContactAddress  string                 `protobuf:"bytes,13,opt,name=emergency_contact_address,json=emergencyContactAddress,proto3" json:"emergency_contact_address,omitempty"`    // 紧急联系人地址 / 緊急連絡先住所
+	unknownFields            protoimpl.UnknownFields
+	sizeCache                protoimpl.SizeCache
+}
+
+func (x *StudentInfo) Reset() {
+	*x = StudentInfo{}
+	mi := &file_api_user_user_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *StudentInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StudentInfo) ProtoMessage() {}
+
+func (x *StudentInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_api_user_user_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StudentInfo.ProtoReflect.Descriptor instead.
+func (*StudentInfo) Descriptor() ([]byte, []int) {
+	return file_api_user_user_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *StudentInfo) GetStudentNumber() string {
+	if x != nil {
+		return x.StudentNumber
+	}
+	return ""
+}
+
+func (x *StudentInfo) GetDepartment() string {
+	if x != nil {
+		return x.Department
+	}
+	return ""
+}
+
+func (x *StudentInfo) GetMajor() string {
+	if x != nil {
+		return x.Major
+	}
+	return ""
+}
+
+func (x *StudentInfo) GetEnrollmentDate() int64 {
+	if x != nil {
+		return x.EnrollmentDate
+	}
+	return 0
+}
+
+func (x *StudentInfo) GetGraduationDate() int64 {
+	if x != nil {
+		return x.GraduationDate
+	}
+	return 0
+}
+
+func (x *StudentInfo) GetBirthday() int64 {
+	if x != nil {
+		return x.Birthday
+	}
+	return 0
+}
+
+func (x *StudentInfo) GetGender() string {
+	if x != nil {
+		return x.Gender
+	}
+	return ""
+}
+
+func (x *StudentInfo) GetBirthPlace() string {
+	if x != nil {
+		return x.BirthPlace
+	}
+	return ""
+}
+
+func (x *StudentInfo) GetAddress() string {
+	if x != nil {
+		return x.Address
+	}
+	return ""
+}
+
+func (x *StudentInfo) GetEmergencyContactName() string {
+	if x != nil {
+		return x.EmergencyContactName
+	}
+	return ""
+}
+
+func (x *StudentInfo) GetEmergencyContactPhone() string {
+	if x != nil {
+		return x.EmergencyContactPhone
+	}
+	return ""
+}
+
+func (x *StudentInfo) GetEmergencyContactRelation() string {
+	if x != nil {
+		return x.EmergencyContactRelation
+	}
+	return ""
+}
+
+func (x *StudentInfo) GetEmergencyContactAddress() string {
+	if x != nil {
+		return x.EmergencyContactAddress
+	}
+	return ""
+}
+
+type TeacherInfo struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Introduction  string                 `protobuf:"bytes,1,opt,name=introduction,proto3" json:"introduction,omitempty"` // 教师简介 / 教員紹介
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TeacherInfo) Reset() {
+	*x = TeacherInfo{}
+	mi := &file_api_user_user_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TeacherInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TeacherInfo) ProtoMessage() {}
+
+func (x *TeacherInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_api_user_user_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TeacherInfo.ProtoReflect.Descriptor instead.
+func (*TeacherInfo) Descriptor() ([]byte, []int) {
+	return file_api_user_user_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *TeacherInfo) GetIntroduction() string {
+	if x != nil {
+		return x.Introduction
+	}
+	return ""
+}
+
+type UpdateUserAvatarRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Avatar        string                 `protobuf:"bytes,1,opt,name=avatar,proto3" json:"avatar,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateUserAvatarRequest) Reset() {
+	*x = UpdateUserAvatarRequest{}
+	mi := &file_api_user_user_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateUserAvatarRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateUserAvatarRequest) ProtoMessage() {}
+
+func (x *UpdateUserAvatarRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_user_user_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateUserAvatarRequest.ProtoReflect.Descriptor instead.
+func (*UpdateUserAvatarRequest) Descriptor() ([]byte, []int) {
+	return file_api_user_user_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *UpdateUserAvatarRequest) GetAvatar() string {
+	if x != nil {
+		return x.Avatar
+	}
+	return ""
+}
+
+type UpdateUserAvatarResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateUserAvatarResponse) Reset() {
+	*x = UpdateUserAvatarResponse{}
+	mi := &file_api_user_user_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateUserAvatarResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateUserAvatarResponse) ProtoMessage() {}
+
+func (x *UpdateUserAvatarResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_user_user_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateUserAvatarResponse.ProtoReflect.Descriptor instead.
+func (*UpdateUserAvatarResponse) Descriptor() ([]byte, []int) {
+	return file_api_user_user_proto_rawDescGZIP(), []int{9}
+}
+
+type RegisterTeacherRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`                                        // 姓名 / 名前
+	NameKana      string                 `protobuf:"bytes,2,opt,name=name_kana,json=nameKana,proto3" json:"name_kana,omitempty"`                // 假名 / フリガナ
+	Avatar        string                 `protobuf:"bytes,3,opt,name=avatar,proto3" json:"avatar,omitempty"`                                    // 头像URL（可选）/ アバター画像URL（オプション）
+	Email         string                 `protobuf:"bytes,4,opt,name=email,proto3" json:"email,omitempty"`                                      // 邮箱 / メールアドレス
+	Phone         string                 `protobuf:"bytes,5,opt,name=phone,proto3" json:"phone,omitempty"`                                      // 手机号 / 携帯電話番号
+	Password      string                 `protobuf:"bytes,6,opt,name=password,proto3" json:"password,omitempty"`                                // 密码 / パスワード
+	Introduction  string                 `protobuf:"bytes,7,opt,name=introduction,proto3" json:"introduction,omitempty"`                        // 教师简介 / 教員紹介
+	TeacherNumber string                 `protobuf:"bytes,8,opt,name=teacher_number,json=teacherNumber,proto3" json:"teacher_number,omitempty"` // 教师番号 / 教員番号
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RegisterTeacherRequest) Reset() {
+	*x = RegisterTeacherRequest{}
+	mi := &file_api_user_user_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RegisterTeacherRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RegisterTeacherRequest) ProtoMessage() {}
+
+func (x *RegisterTeacherRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_user_user_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RegisterTeacherRequest.ProtoReflect.Descriptor instead.
+func (*RegisterTeacherRequest) Descriptor() ([]byte, []int) {
+	return file_api_user_user_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *RegisterTeacherRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *RegisterTeacherRequest) GetNameKana() string {
+	if x != nil {
+		return x.NameKana
+	}
+	return ""
+}
+
+func (x *RegisterTeacherRequest) GetAvatar() string {
+	if x != nil {
+		return x.Avatar
+	}
+	return ""
+}
+
+func (x *RegisterTeacherRequest) GetEmail() string {
+	if x != nil {
+		return x.Email
+	}
+	return ""
+}
+
+func (x *RegisterTeacherRequest) GetPhone() string {
+	if x != nil {
+		return x.Phone
+	}
+	return ""
+}
+
+func (x *RegisterTeacherRequest) GetPassword() string {
+	if x != nil {
+		return x.Password
+	}
+	return ""
+}
+
+func (x *RegisterTeacherRequest) GetIntroduction() string {
+	if x != nil {
+		return x.Introduction
+	}
+	return ""
+}
+
+func (x *RegisterTeacherRequest) GetTeacherNumber() string {
+	if x != nil {
+		return x.TeacherNumber
+	}
+	return ""
+}
+
+type RegisterTeacherResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RegisterTeacherResponse) Reset() {
+	*x = RegisterTeacherResponse{}
+	mi := &file_api_user_user_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RegisterTeacherResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RegisterTeacherResponse) ProtoMessage() {}
+
+func (x *RegisterTeacherResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_user_user_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RegisterTeacherResponse.ProtoReflect.Descriptor instead.
+func (*RegisterTeacherResponse) Descriptor() ([]byte, []int) {
+	return file_api_user_user_proto_rawDescGZIP(), []int{11}
+}
+
 var File_api_user_user_proto protoreflect.FileDescriptor
 
 const file_api_user_user_proto_rawDesc = "" +
 	"\n" +
-	"\x13api/user/user.proto\x12\x04user\"\xbf\x01\n" +
-	"\x0fRegisterRequest\x12\x12\n" +
+	"\x13api/user/user.proto\x12\x04user\"\xcc\x05\n" +
+	"\x16RegisterStudentRequest\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x1b\n" +
 	"\tname_kana\x18\x02 \x01(\tR\bnameKana\x12\x16\n" +
 	"\x06avatar\x18\x03 \x01(\tR\x06avatar\x12\x14\n" +
 	"\x05email\x18\x04 \x01(\tR\x05email\x12\x14\n" +
 	"\x05phone\x18\x05 \x01(\tR\x05phone\x12\x1a\n" +
 	"\bpassword\x18\x06 \x01(\tR\bpassword\x12\x1b\n" +
-	"\tdevice_id\x18\a \x01(\tR\bdeviceId\"\x12\n" +
-	"\x10RegisterResponse\"]\n" +
+	"\tdevice_id\x18\a \x01(\tR\bdeviceId\x12%\n" +
+	"\x0estudent_number\x18\b \x01(\tR\rstudentNumber\x12\x1e\n" +
+	"\n" +
+	"department\x18\t \x01(\tR\n" +
+	"department\x12\x14\n" +
+	"\x05major\x18\n" +
+	" \x01(\tR\x05major\x12'\n" +
+	"\x0fenrollment_date\x18\v \x01(\x03R\x0eenrollmentDate\x12'\n" +
+	"\x0fgraduation_date\x18\f \x01(\x03R\x0egraduationDate\x12\x1a\n" +
+	"\bbirthday\x18\r \x01(\x03R\bbirthday\x12\x16\n" +
+	"\x06gender\x18\x0e \x01(\tR\x06gender\x12\x1f\n" +
+	"\vbirth_place\x18\x0f \x01(\tR\n" +
+	"birthPlace\x12\x18\n" +
+	"\aaddress\x18\x10 \x01(\tR\aaddress\x124\n" +
+	"\x16emergency_contact_name\x18\x11 \x01(\tR\x14emergencyContactName\x126\n" +
+	"\x17emergency_contact_phone\x18\x12 \x01(\tR\x15emergencyContactPhone\x12<\n" +
+	"\x1aemergency_contact_relation\x18\x13 \x01(\tR\x18emergencyContactRelation\x12:\n" +
+	"\x19emergency_contact_address\x18\x14 \x01(\tR\x17emergencyContactAddress\"\x19\n" +
+	"\x17RegisterStudentResponse\"]\n" +
 	"\fLoginRequest\x12\x14\n" +
 	"\x05email\x18\x01 \x01(\tR\x05email\x12\x1a\n" +
 	"\bpassword\x18\x02 \x01(\tR\bpassword\x12\x1b\n" +
 	"\tdevice_id\x18\x03 \x01(\tR\bdeviceId\"!\n" +
 	"\rLoginResponse\x12\x10\n" +
 	"\x03jwt\x18\x01 \x01(\tR\x03jwt\"\x11\n" +
-	"\x0fUserInfoRequest\"\xbe\x01\n" +
+	"\x0fUserInfoRequest\"\xaa\x02\n" +
 	"\x10UserInfoResponse\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x1b\n" +
 	"\tname_kana\x18\x02 \x01(\tR\bnameKana\x12\x16\n" +
@@ -409,11 +946,48 @@ const file_api_user_user_proto_rawDesc = "" +
 	"\x05email\x18\x04 \x01(\tR\x05email\x12\x14\n" +
 	"\x05phone\x18\x05 \x01(\tR\x05phone\x12\x12\n" +
 	"\x04role\x18\x06 \x01(\tR\x04role\x12!\n" +
-	"\faudit_status\x18\a \x01(\tR\vauditStatus2\xb5\x01\n" +
-	"\vUserService\x129\n" +
-	"\bRegister\x12\x15.user.RegisterRequest\x1a\x16.user.RegisterResponse\x120\n" +
+	"\faudit_status\x18\a \x01(\tR\vauditStatus\x124\n" +
+	"\fstudent_info\x18\b \x01(\v2\x11.user.StudentInfoR\vstudentInfo\x124\n" +
+	"\fteacher_info\x18\t \x01(\v2\x11.user.TeacherInfoR\vteacherInfo\"\x93\x04\n" +
+	"\vStudentInfo\x12%\n" +
+	"\x0estudent_number\x18\x01 \x01(\tR\rstudentNumber\x12\x1e\n" +
+	"\n" +
+	"department\x18\x02 \x01(\tR\n" +
+	"department\x12\x14\n" +
+	"\x05major\x18\x03 \x01(\tR\x05major\x12'\n" +
+	"\x0fenrollment_date\x18\x04 \x01(\x03R\x0eenrollmentDate\x12'\n" +
+	"\x0fgraduation_date\x18\x05 \x01(\x03R\x0egraduationDate\x12\x1a\n" +
+	"\bbirthday\x18\x06 \x01(\x03R\bbirthday\x12\x16\n" +
+	"\x06gender\x18\a \x01(\tR\x06gender\x12\x1f\n" +
+	"\vbirth_place\x18\b \x01(\tR\n" +
+	"birthPlace\x12\x18\n" +
+	"\aaddress\x18\t \x01(\tR\aaddress\x124\n" +
+	"\x16emergency_contact_name\x18\n" +
+	" \x01(\tR\x14emergencyContactName\x126\n" +
+	"\x17emergency_contact_phone\x18\v \x01(\tR\x15emergencyContactPhone\x12<\n" +
+	"\x1aemergency_contact_relation\x18\f \x01(\tR\x18emergencyContactRelation\x12:\n" +
+	"\x19emergency_contact_address\x18\r \x01(\tR\x17emergencyContactAddress\"1\n" +
+	"\vTeacherInfo\x12\"\n" +
+	"\fintroduction\x18\x01 \x01(\tR\fintroduction\"1\n" +
+	"\x17UpdateUserAvatarRequest\x12\x16\n" +
+	"\x06avatar\x18\x01 \x01(\tR\x06avatar\"\x1a\n" +
+	"\x18UpdateUserAvatarResponse\"\xf4\x01\n" +
+	"\x16RegisterTeacherRequest\x12\x12\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\x12\x1b\n" +
+	"\tname_kana\x18\x02 \x01(\tR\bnameKana\x12\x16\n" +
+	"\x06avatar\x18\x03 \x01(\tR\x06avatar\x12\x14\n" +
+	"\x05email\x18\x04 \x01(\tR\x05email\x12\x14\n" +
+	"\x05phone\x18\x05 \x01(\tR\x05phone\x12\x1a\n" +
+	"\bpassword\x18\x06 \x01(\tR\bpassword\x12\"\n" +
+	"\fintroduction\x18\a \x01(\tR\fintroduction\x12%\n" +
+	"\x0eteacher_number\x18\b \x01(\tR\rteacherNumber\"\x19\n" +
+	"\x17RegisterTeacherResponse2\xed\x02\n" +
+	"\vUserService\x12N\n" +
+	"\x0fRegisterStudent\x12\x1c.user.RegisterStudentRequest\x1a\x1d.user.RegisterStudentResponse\x12N\n" +
+	"\x0fRegisterTeacher\x12\x1c.user.RegisterTeacherRequest\x1a\x1d.user.RegisterTeacherResponse\x120\n" +
 	"\x05Login\x12\x12.user.LoginRequest\x1a\x13.user.LoginResponse\x129\n" +
-	"\bUserInfo\x12\x15.user.UserInfoRequest\x1a\x16.user.UserInfoResponseB\x0fZ\rapi/user;userb\x06proto3"
+	"\bUserInfo\x12\x15.user.UserInfoRequest\x1a\x16.user.UserInfoResponse\x12Q\n" +
+	"\x10UpdateUserAvatar\x12\x1d.user.UpdateUserAvatarRequest\x1a\x1e.user.UpdateUserAvatarResponseB\x0fZ\rapi/user;userb\x06proto3"
 
 var (
 	file_api_user_user_proto_rawDescOnce sync.Once
@@ -427,27 +1001,39 @@ func file_api_user_user_proto_rawDescGZIP() []byte {
 	return file_api_user_user_proto_rawDescData
 }
 
-var file_api_user_user_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_api_user_user_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
 var file_api_user_user_proto_goTypes = []any{
-	(*RegisterRequest)(nil),  // 0: user.RegisterRequest
-	(*RegisterResponse)(nil), // 1: user.RegisterResponse
-	(*LoginRequest)(nil),     // 2: user.LoginRequest
-	(*LoginResponse)(nil),    // 3: user.LoginResponse
-	(*UserInfoRequest)(nil),  // 4: user.UserInfoRequest
-	(*UserInfoResponse)(nil), // 5: user.UserInfoResponse
+	(*RegisterStudentRequest)(nil),   // 0: user.RegisterStudentRequest
+	(*RegisterStudentResponse)(nil),  // 1: user.RegisterStudentResponse
+	(*LoginRequest)(nil),             // 2: user.LoginRequest
+	(*LoginResponse)(nil),            // 3: user.LoginResponse
+	(*UserInfoRequest)(nil),          // 4: user.UserInfoRequest
+	(*UserInfoResponse)(nil),         // 5: user.UserInfoResponse
+	(*StudentInfo)(nil),              // 6: user.StudentInfo
+	(*TeacherInfo)(nil),              // 7: user.TeacherInfo
+	(*UpdateUserAvatarRequest)(nil),  // 8: user.UpdateUserAvatarRequest
+	(*UpdateUserAvatarResponse)(nil), // 9: user.UpdateUserAvatarResponse
+	(*RegisterTeacherRequest)(nil),   // 10: user.RegisterTeacherRequest
+	(*RegisterTeacherResponse)(nil),  // 11: user.RegisterTeacherResponse
 }
 var file_api_user_user_proto_depIdxs = []int32{
-	0, // 0: user.UserService.Register:input_type -> user.RegisterRequest
-	2, // 1: user.UserService.Login:input_type -> user.LoginRequest
-	4, // 2: user.UserService.UserInfo:input_type -> user.UserInfoRequest
-	1, // 3: user.UserService.Register:output_type -> user.RegisterResponse
-	3, // 4: user.UserService.Login:output_type -> user.LoginResponse
-	5, // 5: user.UserService.UserInfo:output_type -> user.UserInfoResponse
-	3, // [3:6] is the sub-list for method output_type
-	0, // [0:3] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	6,  // 0: user.UserInfoResponse.student_info:type_name -> user.StudentInfo
+	7,  // 1: user.UserInfoResponse.teacher_info:type_name -> user.TeacherInfo
+	0,  // 2: user.UserService.RegisterStudent:input_type -> user.RegisterStudentRequest
+	10, // 3: user.UserService.RegisterTeacher:input_type -> user.RegisterTeacherRequest
+	2,  // 4: user.UserService.Login:input_type -> user.LoginRequest
+	4,  // 5: user.UserService.UserInfo:input_type -> user.UserInfoRequest
+	8,  // 6: user.UserService.UpdateUserAvatar:input_type -> user.UpdateUserAvatarRequest
+	1,  // 7: user.UserService.RegisterStudent:output_type -> user.RegisterStudentResponse
+	11, // 8: user.UserService.RegisterTeacher:output_type -> user.RegisterTeacherResponse
+	3,  // 9: user.UserService.Login:output_type -> user.LoginResponse
+	5,  // 10: user.UserService.UserInfo:output_type -> user.UserInfoResponse
+	9,  // 11: user.UserService.UpdateUserAvatar:output_type -> user.UpdateUserAvatarResponse
+	7,  // [7:12] is the sub-list for method output_type
+	2,  // [2:7] is the sub-list for method input_type
+	2,  // [2:2] is the sub-list for extension type_name
+	2,  // [2:2] is the sub-list for extension extendee
+	0,  // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_api_user_user_proto_init() }
@@ -461,7 +1047,7 @@ func file_api_user_user_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_api_user_user_proto_rawDesc), len(file_api_user_user_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   6,
+			NumMessages:   12,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

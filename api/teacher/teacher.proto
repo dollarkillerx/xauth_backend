@@ -3,3 +3,12 @@ syntax = "proto3";
 package teacher;
 
 option go_package = "api/teacher;teacher";
+
+// TeacherService 定义
+service TeacherService {
+  // 添加课程
+  // 设置休讲
+  // 发送公告
+  // 查看课程打卡情况
+  // 补卡
+}

@@ -3,3 +3,81 @@ syntax = "proto3";
 package student;
 
 option go_package = "api/student;student";
+
+service StudentService {
+  // 更新用户头像
+  rpc UpdateUserAvatar(UpdateUserAvatarRequest) returns (UpdateUserAvatarResponse);
+  // 签到
+  rpc CheckIn(CheckInRequest) returns (CheckInResponse);
+  // 可签到课程
+  rpc CheckInCourses(CheckInCoursesRequest) returns (CheckInCoursesResponse);
+  // 打卡记录
+  rpc CheckInRecords(CheckInRecordsRequest) returns (CheckInRecordsResponse);
+}
+
+message CheckInRequest {
+  string type = 1;
+  // 打卡类型（entry=入校、exit=退校、class=上课签到）/ 打刻タイプ（entry＝登校、exit＝下校、class＝授業出席）
+
+  string course_id = 2;
+  // 课程ID（只有上课打卡时填写，入校/退校为空）/ 講義ID（授業打刻の場合のみ）
+
+  string status = 3;
+  // 出勤状态（present=出席、absent=缺席、late=迟到）/ 出席状況（present＝出席、absent＝欠席、late＝遅刻）
+
+  int64 timestamp = 4;
+  // 打卡时间（Unix时间戳）/ 打刻時間（Unixタイムスタンプ）
+
+  string device_id = 5;
+  // 打卡设备编号 / 打刻端末ID
+
+  string location = 6;
+  // 打卡地点描述（例：北门、教学楼A）/ 打刻場所（例：北門、講義棟A）
+
+  string bluetooth_terminal_id = 7;
+  // 蓝牙终端ID（例如用于室内定位辅助打卡）/ Bluetooth端末ID（屋内位置情報支援のため）
+}
+
+message CheckInResponse {}
+
+message CheckInRecordsRequest {
+  int64 timestamp = 1;
+  // 打卡时间（Unix时间戳）/ 打刻時間（Unixタイムスタンプ）
+}
+
+
+message CheckInRecordsResponse {
+  repeated CheckInRecord records = 1;
+}
+
+message CheckInRecord {
+  string type = 1;
+  // 打卡类型（entry=入校、exit=退校、class=上课签到）/ 打刻タイプ（entry＝登校、exit＝下校、class＝授業出席）
+  string course_id = 2;
+  // 课程ID（只有上课打卡时填写，入校/退校为空）/ 講義ID（授業打刻の場合のみ）
+  string status = 3;
+  // 出勤状态（present=出席、absent=缺席、late=迟到）/ 出席状況（present＝出席、absent＝欠席、late＝遅刻）
+  int64 timestamp = 4;
+  // 打卡时间（Unix时间戳）/ 打刻時間（Unixタイムスタンプ）
+}
+
+message CheckInCoursesRequest {}
+
+message CheckInCoursesResponse {
+  repeated CheckInCourse courses = 1;
+}
+
+message CheckInCourse {
+  string id = 1;
+  string name = 2;
+  string location = 3;
+  string start_time = 4;
+  string end_time = 5;
+  string day_of_week = 6;
+}
+
+message UpdateUserAvatarRequest {
+  string avatar = 1;
+}
+
+message UpdateUserAvatarResponse {}
