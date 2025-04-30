@@ -3,56 +3,78 @@ package middleware
 import (
 	"context"
 	"fmt"
+	"log"
+
+	"github.com/golang-jwt/jwt/v5"
 	"github.com/pkg/errors"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/metadata"
+	"google.golang.org/grpc/status"
 )
 
-func AuthInterceptor(ctx context.Context) (context.Context, error) {
-	md, ok := metadata.FromIncomingContext(ctx)
-	if !ok {
-		return nil, errors.New("missing metadata")
-	}
-
-	tokens := md.Get("authorization") // 获取请求头中的 authorization 字段
-	if len(tokens) == 0 || !validateToken(tokens[0]) {
-		return nil, errors.New("invalid token")
-	}
-
-	// 认证通过，可以在 context 中加信息
-	newCtx := context.WithValue(ctx, "user", "user-id-from-token")
-	return newCtx, nil
-}
-
-func validateToken(token string) bool {
-	return token == "your-valid-token"
-}
-
+// 不需要认证的路径
 var noAuthPath = []string{
-	"/proto.UserService/Login",
-	"/proto.UserService/Register",
+	"/user.UserService/Login",
 }
 
-func UnaryServerInterceptor(
-	ctx context.Context,
-	req interface{},
-	info *grpc.UnaryServerInfo,
-	handler grpc.UnaryHandler,
-) (interface{}, error) {
-	fmt.Println("调用接口:", info.FullMethod)
+func GetUnaryServerInterceptor(secretKey string) grpc.UnaryServerInterceptor {
+	return func(
+		ctx context.Context,
+		req interface{},
+		info *grpc.UnaryServerInfo,
+		handler grpc.UnaryHandler,
+	) (interface{}, error) {
+		log.Println("call method:", info.FullMethod)
 
-	// 判断是否在不需要认证的白名单中
-	if !isNoAuthPath(info.FullMethod) {
-		// 如果不是白名单，先认证
-		newCtx, err := AuthInterceptor(ctx)
-		if err != nil {
-			return nil, err
+		if !isNoAuthPath(info.FullMethod) {
+			// 从 ctx 提取 token 并校验
+			md, ok := metadata.FromIncomingContext(ctx)
+			if !ok {
+				return nil, status.Errorf(codes.Unauthenticated, "missing metadata")
+			}
+
+			tokens := md.Get("authorization")
+			if len(tokens) == 0 {
+				return nil, status.Errorf(codes.Unauthenticated, "missing token")
+			}
+
+			claims, err := validateJWT(tokens[0], secretKey)
+			if err != nil {
+				return nil, status.Errorf(codes.Unauthenticated, "invalid token: %v", err)
+			}
+
+			// 从 claims 提取 user_id
+			userID, ok := claims["user_id"].(string)
+			if !ok {
+				return nil, status.Errorf(codes.Unauthenticated, "invalid token payload: user_id missing")
+			}
+
+			// 注入到上下文
+			ctx = context.WithValue(ctx, "user_id", userID)
 		}
-		ctx = newCtx // 更新 context
+
+		return handler(ctx, req)
+	}
+}
+
+func validateJWT(tokenString string, secretKey string) (jwt.MapClaims, error) {
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
+		}
+		return []byte(secretKey), nil
+	})
+
+	if err != nil {
+		return nil, err
 	}
 
-	// 执行真正的处理逻辑
-	return handler(ctx, req)
+	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+		return claims, nil
+	}
+
+	return nil, errors.New("invalid token")
 }
 
 // 判断方法是否在白名单中

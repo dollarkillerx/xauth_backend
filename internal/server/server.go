@@ -29,8 +29,9 @@ func (s *Server) Run() error {
 	}
 
 	server := grpc.NewServer(
-		grpc.UnaryInterceptor(middleware.UnaryServerInterceptor),
+		grpc.UnaryInterceptor(middleware.GetUnaryServerInterceptor(s.conf.JWTSecretKey)),
 	)
+
 	user.RegisterUserServiceServer(server, &userServer.UserService{
 		Storage: s.storage,
 		Conf:    s.conf,
