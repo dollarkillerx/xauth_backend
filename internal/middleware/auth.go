@@ -16,6 +16,7 @@ import (
 // 不需要认证的路径
 var noAuthPath = []string{
 	"/user.UserService/Login",
+	"/setting.SettingService/GetSetting",
 }
 
 func GetUnaryServerInterceptor(secretKey string) grpc.UnaryServerInterceptor {
