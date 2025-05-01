@@ -33,7 +33,7 @@ type User struct {
 
 type LoginLog struct {
 	BaseModel
-	UserID uint64 `gorm:"index;not null" json:"user_id"`
+	UserID string `gorm:"index;not null" json:"user_id"`
 	// 哪个用户登录 / ログインしたユーザーID
 	DeviceID string `gorm:"type:varchar(255);not null" json:"device_id"`
 	// 登录设备ID / ログインデバイスID

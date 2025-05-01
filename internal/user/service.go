@@ -78,6 +78,9 @@ func (u *UserService) Login(ctx context.Context, request *user.LoginRequest) (*u
 		return nil, err
 	}
 
+	// login 日志更新
+	err = u.Storage.UpdateUserLoginLogs(userdata, request.DeviceId, common.GetClientIP(ctx))
+
 	return &user.LoginResponse{
 		Jwt: jwt,
 	}, nil
@@ -97,18 +100,59 @@ func generateJWT(userID string, role string, secretKey string, duration time.Dur
 }
 
 func (u *UserService) UserInfo(ctx context.Context, request *user.UserInfoRequest) (*user.UserInfoResponse, error) {
-	role := common.CtxGet(ctx, "role")
-	fmt.Println(role)
+	userId := common.CtxGet(ctx, "user_id")
+	userInfo, err := u.Storage.GetUserByID(userId)
+	if err != nil {
+		return nil, err
+	}
+
+	var studentInfo *user.StudentInfo
+	var teacherInfo *user.TeacherInfo
+
+	if userInfo.Role == "student" {
+		student, err := u.Storage.GetStudentByID(userId)
+		if err != nil {
+			return nil, err
+		}
+		studentInfo = &user.StudentInfo{
+			StudentNumber:            student.StudentNumber,
+			Department:               student.Department,
+			Major:                    student.Major,
+			EnrollmentDate:           student.EnrollmentDate.Unix(),
+			GraduationDate:           student.GraduationDate.Unix(),
+			Birthday:                 student.Birthday.Unix(),
+			Gender:                   student.Gender,
+			BirthPlace:               student.BirthPlace,
+			Address:                  student.Address,
+			EmergencyContactName:     student.EmergencyContactName,
+			EmergencyContactPhone:    student.EmergencyContactPhone,
+			EmergencyContactRelation: student.EmergencyContactRelation,
+			EmergencyContactAddress:  student.EmergencyContactAddress,
+		}
+	}
+
+	if userInfo.Role == "teacher" {
+		teacher, err := u.Storage.GetTeacherByID(userId)
+		if err != nil {
+			return nil, err
+		}
+
+		teacherInfo = &user.TeacherInfo{
+			Introduction:  teacher.Introduction,
+			TeacherNumber: teacher.TeacherNumber,
+		}
+	}
+
 	return &user.UserInfoResponse{
-		Name:        "this is name",
-		NameKana:    "kana",
-		Avatar:      "",
-		Email:       "",
-		Phone:       "",
-		Role:        "",
-		AuditStatus: "",
-		StudentInfo: nil,
-		TeacherInfo: nil,
+		Name:        userInfo.Name,
+		NameKana:    userInfo.NameKana,
+		Avatar:      userInfo.Avatar,
+		Email:       userInfo.Email,
+		Phone:       userInfo.Phone,
+		Role:        userInfo.Role,
+		AuditStatus: userInfo.AuditStatus,
+		StudentInfo: studentInfo,
+		TeacherInfo: teacherInfo,
 	}, nil
 }
 

@@ -643,7 +643,9 @@ func (x *StudentInfo) GetEmergencyContactAddress() string {
 
 type TeacherInfo struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Introduction  string                 `protobuf:"bytes,1,opt,name=introduction,proto3" json:"introduction,omitempty"` // 教师简介 / 教員紹介
+	TeacherNumber string                 `protobuf:"bytes,1,opt,name=teacher_number,json=teacherNumber,proto3" json:"teacher_number,omitempty"`
+	// 教师编号
+	Introduction  string `protobuf:"bytes,2,opt,name=introduction,proto3" json:"introduction,omitempty"` // 简介（教师个人介绍）/ 自己紹介・プロフィール
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -676,6 +678,13 @@ func (x *TeacherInfo) ProtoReflect() protoreflect.Message {
 // Deprecated: Use TeacherInfo.ProtoReflect.Descriptor instead.
 func (*TeacherInfo) Descriptor() ([]byte, []int) {
 	return file_api_user_user_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *TeacherInfo) GetTeacherNumber() string {
+	if x != nil {
+		return x.TeacherNumber
+	}
+	return ""
 }
 
 func (x *TeacherInfo) GetIntroduction() string {
@@ -966,9 +975,10 @@ const file_api_user_user_proto_rawDesc = "" +
 	" \x01(\tR\x14emergencyContactName\x126\n" +
 	"\x17emergency_contact_phone\x18\v \x01(\tR\x15emergencyContactPhone\x12<\n" +
 	"\x1aemergency_contact_relation\x18\f \x01(\tR\x18emergencyContactRelation\x12:\n" +
-	"\x19emergency_contact_address\x18\r \x01(\tR\x17emergencyContactAddress\"1\n" +
-	"\vTeacherInfo\x12\"\n" +
-	"\fintroduction\x18\x01 \x01(\tR\fintroduction\"1\n" +
+	"\x19emergency_contact_address\x18\r \x01(\tR\x17emergencyContactAddress\"X\n" +
+	"\vTeacherInfo\x12%\n" +
+	"\x0eteacher_number\x18\x01 \x01(\tR\rteacherNumber\x12\"\n" +
+	"\fintroduction\x18\x02 \x01(\tR\fintroduction\"1\n" +
 	"\x17UpdateUserAvatarRequest\x12\x16\n" +
 	"\x06avatar\x18\x01 \x01(\tR\x06avatar\"\x1a\n" +
 	"\x18UpdateUserAvatarResponse\"\xf4\x01\n" +

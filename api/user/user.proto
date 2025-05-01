@@ -147,8 +147,10 @@ message StudentInfo {
 }
 
 message TeacherInfo {
-  string introduction = 1;
-  // 教师简介 / 教員紹介
+  string teacher_number = 1;
+  // 教师编号
+  string introduction = 2;
+  // 简介（教师个人介绍）/ 自己紹介・プロフィール
 }
 
 message UpdateUserAvatarRequest {
