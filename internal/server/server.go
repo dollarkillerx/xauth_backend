@@ -1,9 +1,11 @@
 package server
 
 import (
+	"github.com/dollarkillerx/xauth_backend/api/setting"
 	"github.com/dollarkillerx/xauth_backend/api/user"
 	"github.com/dollarkillerx/xauth_backend/internal/conf"
 	"github.com/dollarkillerx/xauth_backend/internal/middleware"
+	settingServer "github.com/dollarkillerx/xauth_backend/internal/setting"
 	"github.com/dollarkillerx/xauth_backend/internal/storage"
 	userServer "github.com/dollarkillerx/xauth_backend/internal/user"
 	"google.golang.org/grpc"
@@ -32,7 +34,13 @@ func (s *Server) Run() error {
 		grpc.UnaryInterceptor(middleware.GetUnaryServerInterceptor(s.conf.JWTSecretKey)),
 	)
 
+	// Register service
 	user.RegisterUserServiceServer(server, &userServer.UserService{
+		Storage: s.storage,
+		Conf:    s.conf,
+	})
+
+	setting.RegisterSettingServiceServer(server, &settingServer.SettingService{
 		Storage: s.storage,
 		Conf:    s.conf,
 	})
