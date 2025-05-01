@@ -38,7 +38,41 @@ func TestAuth1(t *testing.T) {
 	defer cancel()
 
 	// 调用方法，比如调用 UserInfo
-	resp, err := client.UserInfo(ctx, &user.UserInfoRequest{})
+	//resp, err := client.UserInfo(ctx, &user.UserInfoRequest{})
+	//if err != nil {
+	//	s, ok := status.FromError(err)
+	//	if ok {
+	//		fmt.Printf("错误信息: %s\n", s.Message())
+	//	}
+	//	log.Fatalf("调用失败: %v", err)
+	//}
+	//fmt.Printf("响应: %+v\n", resp)
+
+	//client.Login(ctx, &user.LoginRequest{})
+
+	student, err := client.RegisterStudent(ctx, &user.RegisterStudentRequest{
+		Name:                     "王燁",    // 中文姓名
+		NameKana:                 "オウ ヨウ", // 姓名カナ
+		Avatar:                   "",
+		Email:                    "leo@example.com",
+		Phone:                    "+819012345678", // 日本手机号 e164 格式
+		Password:                 "securePass123", // 至少 6 位
+		DeviceId:                 "device-uuid-001",
+		StudentNumber:            "20250001",
+		Department:               "情報学部",                              // 学部（例如：信息学部）
+		Major:                    "人工知能学科",                            // 学科
+		EnrollmentDate:           time.Now().AddDate(-1, 0, 0).Unix(), // 1年前入学
+		GraduationDate:           time.Now().AddDate(3, 0, 0).Unix(),  // 3年后毕业
+		Birthday:                 time.Date(2004, 4, 12, 0, 0, 0, 0, time.UTC).Unix(),
+		Gender:                   "male",
+		BirthPlace:               "中国 四川省成都市",
+		Address:                  "京都府京都市左京区○○町123",
+		EmergencyContactName:     "王芳",
+		EmergencyContactPhone:    "+8613800138000", // 中国紧急联系人
+		EmergencyContactRelation: "母親",
+		EmergencyContactAddress:  "中国 四川省成都市青羊区 XX路100号",
+	})
+
 	if err != nil {
 		s, ok := status.FromError(err)
 		if ok {
@@ -46,9 +80,7 @@ func TestAuth1(t *testing.T) {
 		}
 		log.Fatalf("调用失败: %v", err)
 	}
-	fmt.Printf("响应: %+v\n", resp)
-
-	//client.Login(ctx, &user.LoginRequest{})
+	fmt.Printf("响应: %+v\n", student)
 
 }
 

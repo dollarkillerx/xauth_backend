@@ -2,12 +2,16 @@ package user
 
 import (
 	"context"
-	"github.com/golang-jwt/jwt/v5"
+	"fmt"
 	"time"
 
 	"github.com/dollarkillerx/xauth_backend/api/user"
 	"github.com/dollarkillerx/xauth_backend/internal/conf"
 	"github.com/dollarkillerx/xauth_backend/internal/storage"
+	"github.com/dollarkillerx/xauth_backend/internal/user/dao"
+	"github.com/dollarkillerx/xauth_backend/pkg/common/ctx_utils"
+	"github.com/go-playground/validator/v10"
+	"github.com/golang-jwt/jwt/v5"
 )
 
 type UserService struct {
@@ -18,11 +22,30 @@ type UserService struct {
 }
 
 func (u *UserService) RegisterStudent(ctx context.Context, request *user.RegisterStudentRequest) (*user.RegisterStudentResponse, error) {
-	//TODO implement me
-	panic("implement me")
+	// check auth
+	role := ctx_utils.Get(ctx, "role")
+	if role != "admin" {
+		return nil, fmt.Errorf("unauthorized")
+	}
+	// check auth end
+	params := dao.NewRegisterStudentRequestFromGRPC(request)
+
+	err := validator.New().Struct(params)
+	if err != nil {
+		return nil, err
+	}
+
+	return &user.RegisterStudentResponse{}, nil
 }
 
 func (u *UserService) RegisterTeacher(ctx context.Context, request *user.RegisterTeacherRequest) (*user.RegisterTeacherResponse, error) {
+	// check auth
+	role := ctx_utils.Get(ctx, "role")
+	if role != "admin" {
+		return nil, fmt.Errorf("unauthorized")
+	}
+	// check auth end
+
 	//TODO implement me
 	panic("implement me")
 }
@@ -52,6 +75,8 @@ func generateJWT(userID string, role string, secretKey string, duration time.Dur
 }
 
 func (u *UserService) UserInfo(ctx context.Context, request *user.UserInfoRequest) (*user.UserInfoResponse, error) {
+	role := ctx_utils.Get(ctx, "role")
+	fmt.Println(role)
 	return &user.UserInfoResponse{
 		Name:        "this is name",
 		NameKana:    "kana",
@@ -66,11 +91,6 @@ func (u *UserService) UserInfo(ctx context.Context, request *user.UserInfoReques
 }
 
 func (u *UserService) UpdateUserAvatar(ctx context.Context, request *user.UpdateUserAvatarRequest) (*user.UpdateUserAvatarResponse, error) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (u *UserService) mustEmbedUnimplementedUserServiceServer() {
 	//TODO implement me
 	panic("implement me")
 }
