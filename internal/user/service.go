@@ -28,7 +28,7 @@ func (u *UserService) RegisterTeacher(ctx context.Context, request *user.Registe
 }
 
 func (u *UserService) Login(ctx context.Context, request *user.LoginRequest) (*user.LoginResponse, error) {
-	jwt, err := generateJWT(request.Email, u.Conf.JWTSecretKey, time.Hour*24)
+	jwt, err := generateJWT(request.Email, "admin", u.Conf.JWTSecretKey, time.Hour*24*180)
 	if err != nil {
 		return nil, err
 	}
@@ -38,9 +38,10 @@ func (u *UserService) Login(ctx context.Context, request *user.LoginRequest) (*u
 	}, nil
 }
 
-func generateJWT(userID string, secretKey string, duration time.Duration) (string, error) {
+func generateJWT(userID string, role string, secretKey string, duration time.Duration) (string, error) {
 	claims := jwt.MapClaims{
 		"user_id": userID,
+		"role":    role,
 		"exp":     time.Now().Add(duration).Unix(), // 过期时间
 		"iat":     time.Now().Unix(),               // 签发时间
 	}
@@ -51,8 +52,17 @@ func generateJWT(userID string, secretKey string, duration time.Duration) (strin
 }
 
 func (u *UserService) UserInfo(ctx context.Context, request *user.UserInfoRequest) (*user.UserInfoResponse, error) {
-	//TODO implement me
-	panic("implement me")
+	return &user.UserInfoResponse{
+		Name:        "this is name",
+		NameKana:    "kana",
+		Avatar:      "",
+		Email:       "",
+		Phone:       "",
+		Role:        "",
+		AuditStatus: "",
+		StudentInfo: nil,
+		TeacherInfo: nil,
+	}, nil
 }
 
 func (u *UserService) UpdateUserAvatar(ctx context.Context, request *user.UpdateUserAvatarRequest) (*user.UpdateUserAvatarResponse, error) {

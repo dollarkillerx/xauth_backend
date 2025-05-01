@@ -52,6 +52,15 @@ func GetUnaryServerInterceptor(secretKey string) grpc.UnaryServerInterceptor {
 
 			// 注入到上下文
 			ctx = context.WithValue(ctx, "user_id", userID)
+
+			// 从 claims 提取 role
+			role, ok := claims["role"].(string)
+			if !ok {
+				return nil, status.Errorf(codes.Unauthenticated, "invalid token payload: role missing")
+			}
+
+			// 注入到上下文
+			ctx = context.WithValue(ctx, "role", role)
 		}
 
 		return handler(ctx, req)
