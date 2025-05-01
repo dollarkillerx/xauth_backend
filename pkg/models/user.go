@@ -28,6 +28,7 @@ type User struct {
 	// 最后登录设备ID / 最後にログインしたデバイスID
 	ForbidChangeDevice bool `gorm:"default:true" json:"forbid_change_device"`
 	// 禁止换设备登录（true=禁止，false=允许）/ デバイス変更禁止（true=禁止、false=許可）
+
 }
 
 type LoginLog struct {

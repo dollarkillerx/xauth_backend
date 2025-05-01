@@ -56,3 +56,17 @@ func NewRegisterStudentRequestFromGRPC(req *user.RegisterStudentRequest) *Regist
 		EmergencyContactAddress:  req.GetEmergencyContactAddress(),
 	}
 }
+
+type LoginRequest struct {
+	Email    string `json:"email" validate:"required,email"`     // 邮箱 / メールアドレス
+	Password string `json:"password" validate:"required,min=6"`  // 密码 / パスワード（6文字以上）
+	DeviceID string `json:"device_id" validate:"required,min=6"` // 设备ID / デバイスID
+}
+
+func NewLoginRequestFromGRPC(req *user.LoginRequest) *LoginRequest {
+	return &LoginRequest{
+		Email:    req.GetEmail(),
+		Password: req.GetPassword(),
+		DeviceID: req.GetDeviceId(),
+	}
+}

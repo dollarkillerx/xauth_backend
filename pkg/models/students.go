@@ -14,13 +14,13 @@ type Student struct {
 	Major string `gorm:"type:varchar(100);not null" json:"major"`
 	// 学科 / 学科（がっか）
 
-	EnrollmentDate time.Time `gorm:"not null" json:"enrollment_date"`
+	EnrollmentDate *time.Time `json:"enrollment_date"`
 	// 入学日期 / 入学日（にゅうがくび）
 
 	GraduationDate *time.Time `json:"graduation_date"`
 	// 毕业日期（可为空）/ 卒業日（NULL可）
 
-	Birthday time.Time `gorm:"not null" json:"birthday"`
+	Birthday *time.Time `gjson:"birthday"`
 	// 出生日期 / 生年月日（せいねんがっぴ）
 
 	Gender string `gorm:"type:varchar(10);not null" json:"gender"`

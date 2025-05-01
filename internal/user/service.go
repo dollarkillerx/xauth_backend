@@ -9,7 +9,7 @@ import (
 	"github.com/dollarkillerx/xauth_backend/internal/conf"
 	"github.com/dollarkillerx/xauth_backend/internal/storage"
 	"github.com/dollarkillerx/xauth_backend/internal/user/dao"
-	"github.com/dollarkillerx/xauth_backend/pkg/common/ctx_utils"
+	"github.com/dollarkillerx/xauth_backend/pkg/common"
 	"github.com/go-playground/validator/v10"
 	"github.com/golang-jwt/jwt/v5"
 )
@@ -23,7 +23,7 @@ type UserService struct {
 
 func (u *UserService) RegisterStudent(ctx context.Context, request *user.RegisterStudentRequest) (*user.RegisterStudentResponse, error) {
 	// check auth
-	role := ctx_utils.Get(ctx, "role")
+	role := common.CtxGet(ctx, "role")
 	if role != "admin" {
 		return nil, fmt.Errorf("unauthorized")
 	}
@@ -35,12 +35,14 @@ func (u *UserService) RegisterStudent(ctx context.Context, request *user.Registe
 		return nil, err
 	}
 
+	err = u.Storage.RegisterStudent(params)
+
 	return &user.RegisterStudentResponse{}, nil
 }
 
 func (u *UserService) RegisterTeacher(ctx context.Context, request *user.RegisterTeacherRequest) (*user.RegisterTeacherResponse, error) {
 	// check auth
-	role := ctx_utils.Get(ctx, "role")
+	role := common.CtxGet(ctx, "role")
 	if role != "admin" {
 		return nil, fmt.Errorf("unauthorized")
 	}
@@ -51,7 +53,27 @@ func (u *UserService) RegisterTeacher(ctx context.Context, request *user.Registe
 }
 
 func (u *UserService) Login(ctx context.Context, request *user.LoginRequest) (*user.LoginResponse, error) {
-	jwt, err := generateJWT(request.Email, "admin", u.Conf.JWTSecretKey, time.Hour*24*180)
+	params := dao.NewLoginRequestFromGRPC(request)
+
+	err := validator.New().Struct(params)
+	if err != nil {
+		return nil, err
+	}
+
+	userdata, err := u.Storage.GetUserByEmail(params.Email)
+	if err != nil {
+		return nil, err
+	}
+
+	if userdata.Password != common.HashPassword(params.Password) {
+		return nil, fmt.Errorf("invalid password")
+	}
+
+	if userdata.AuditStatus != "disabled" {
+		return nil, fmt.Errorf("user is disabled")
+	}
+
+	jwt, err := generateJWT(userdata.ID, userdata.Role, u.Conf.JWTSecretKey, time.Hour*24*180)
 	if err != nil {
 		return nil, err
 	}
@@ -75,7 +97,7 @@ func generateJWT(userID string, role string, secretKey string, duration time.Dur
 }
 
 func (u *UserService) UserInfo(ctx context.Context, request *user.UserInfoRequest) (*user.UserInfoResponse, error) {
-	role := ctx_utils.Get(ctx, "role")
+	role := common.CtxGet(ctx, "role")
 	fmt.Println(role)
 	return &user.UserInfoResponse{
 		Name:        "this is name",
