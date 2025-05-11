@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	SettingService_GetSetting_FullMethodName = "/setting.SettingService/GetSetting"
+	SettingService_SetSetting_FullMethodName = "/setting.SettingService/SetSetting"
 )
 
 // SettingServiceClient is the client API for SettingService service.
@@ -27,6 +28,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type SettingServiceClient interface {
 	GetSetting(ctx context.Context, in *GetSettingRequest, opts ...grpc.CallOption) (*GetSettingResponse, error)
+	SetSetting(ctx context.Context, in *SetSettingRequest, opts ...grpc.CallOption) (*SetSettingResponse, error)
 }
 
 type settingServiceClient struct {
@@ -47,11 +49,22 @@ func (c *settingServiceClient) GetSetting(ctx context.Context, in *GetSettingReq
 	return out, nil
 }
 
+func (c *settingServiceClient) SetSetting(ctx context.Context, in *SetSettingRequest, opts ...grpc.CallOption) (*SetSettingResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SetSettingResponse)
+	err := c.cc.Invoke(ctx, SettingService_SetSetting_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SettingServiceServer is the server API for SettingService service.
 // All implementations must embed UnimplementedSettingServiceServer
 // for forward compatibility.
 type SettingServiceServer interface {
 	GetSetting(context.Context, *GetSettingRequest) (*GetSettingResponse, error)
+	SetSetting(context.Context, *SetSettingRequest) (*SetSettingResponse, error)
 	mustEmbedUnimplementedSettingServiceServer()
 }
 
@@ -64,6 +77,9 @@ type UnimplementedSettingServiceServer struct{}
 
 func (UnimplementedSettingServiceServer) GetSetting(context.Context, *GetSettingRequest) (*GetSettingResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSetting not implemented")
+}
+func (UnimplementedSettingServiceServer) SetSetting(context.Context, *SetSettingRequest) (*SetSettingResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetSetting not implemented")
 }
 func (UnimplementedSettingServiceServer) mustEmbedUnimplementedSettingServiceServer() {}
 func (UnimplementedSettingServiceServer) testEmbeddedByValue()                        {}
@@ -104,6 +120,24 @@ func _SettingService_GetSetting_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SettingService_SetSetting_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetSettingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingServiceServer).SetSetting(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SettingService_SetSetting_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingServiceServer).SetSetting(ctx, req.(*SetSettingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // SettingService_ServiceDesc is the grpc.ServiceDesc for SettingService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -114,6 +148,10 @@ var SettingService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetSetting",
 			Handler:    _SettingService_GetSetting_Handler,
+		},
+		{
+			MethodName: "SetSetting",
+			Handler:    _SettingService_SetSetting_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

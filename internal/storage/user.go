@@ -47,3 +47,9 @@ func (s *Storage) GetUserByID(id string) (*models.User, error) {
 	}
 	return user, nil
 }
+
+func (s *Storage) UpdateUserAvatar(userId string, avatar string) error {
+	return s.db.Model(&models.User{}).Where("id = ?", userId).Updates(map[string]interface{}{
+		"avatar": avatar,
+	}).Error
+}

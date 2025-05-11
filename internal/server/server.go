@@ -34,12 +34,13 @@ func (s *Server) Run() error {
 		grpc.UnaryInterceptor(middleware.GetUnaryServerInterceptor(s.conf.JWTSecretKey)),
 	)
 
-	// Register service
+	// Register service user
 	user.RegisterUserServiceServer(server, &userServer.UserService{
 		Storage: s.storage,
 		Conf:    s.conf,
 	})
 
+	// Register service setting
 	setting.RegisterSettingServiceServer(server, &settingServer.SettingService{
 		Storage: s.storage,
 		Conf:    s.conf,

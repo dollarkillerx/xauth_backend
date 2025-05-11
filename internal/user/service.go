@@ -157,6 +157,6 @@ func (u *UserService) UserInfo(ctx context.Context, request *user.UserInfoReques
 }
 
 func (u *UserService) UpdateUserAvatar(ctx context.Context, request *user.UpdateUserAvatarRequest) (*user.UpdateUserAvatarResponse, error) {
-	//TODO implement me
-	panic("implement me")
+	err := u.Storage.UpdateUserAvatar(common.CtxGet(ctx, "user_id"), request.Avatar)
+	return &user.UpdateUserAvatarResponse{}, err
 }

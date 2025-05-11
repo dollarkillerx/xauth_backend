@@ -157,6 +157,142 @@ func (x *GetSettingResponse) GetRestrictEmailDomain() bool {
 	return false
 }
 
+type SetSettingRequest struct {
+	state               protoimpl.MessageState `protogen:"open.v1"`
+	SchoolName          string                 `protobuf:"bytes,1,opt,name=school_name,json=schoolName,proto3" json:"school_name,omitempty"`                               // 学校名称 / 学校名
+	PrincipalName       string                 `protobuf:"bytes,2,opt,name=principal_name,json=principalName,proto3" json:"principal_name,omitempty"`                      // 校长姓名 / 校長名
+	EmailDomain         string                 `protobuf:"bytes,3,opt,name=email_domain,json=emailDomain,proto3" json:"email_domain,omitempty"`                            // 邮箱后缀 / メールドメイン（例：@school.jp）
+	AllowRegister       bool                   `protobuf:"varint,4,opt,name=allow_register,json=allowRegister,proto3" json:"allow_register,omitempty"`                     // 是否允许注册 / 登録許可
+	AllowChangeDevice   bool                   `protobuf:"varint,5,opt,name=allow_change_device,json=allowChangeDevice,proto3" json:"allow_change_device,omitempty"`       // 是否允许更换登录设备 / デバイス変更許可
+	RestrictClockInIp   bool                   `protobuf:"varint,6,opt,name=restrict_clock_in_ip,json=restrictClockInIp,proto3" json:"restrict_clock_in_ip,omitempty"`     // 是否限制打卡IP / 打刻IP制限
+	RestrictIpList      string                 `protobuf:"bytes,7,opt,name=restrict_ip_list,json=restrictIpList,proto3" json:"restrict_ip_list,omitempty"`                 // 限制打卡IP列表（逗号分隔）/ 打刻許可IPリスト（カンマ区切り）
+	RestrictEmailDomain bool                   `protobuf:"varint,8,opt,name=restrict_email_domain,json=restrictEmailDomain,proto3" json:"restrict_email_domain,omitempty"` // 是否开启邮箱后缀注册限制 / メールドメイン制限登録を有効にする
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
+}
+
+func (x *SetSettingRequest) Reset() {
+	*x = SetSettingRequest{}
+	mi := &file_api_setting_setting_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SetSettingRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SetSettingRequest) ProtoMessage() {}
+
+func (x *SetSettingRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_setting_setting_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SetSettingRequest.ProtoReflect.Descriptor instead.
+func (*SetSettingRequest) Descriptor() ([]byte, []int) {
+	return file_api_setting_setting_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *SetSettingRequest) GetSchoolName() string {
+	if x != nil {
+		return x.SchoolName
+	}
+	return ""
+}
+
+func (x *SetSettingRequest) GetPrincipalName() string {
+	if x != nil {
+		return x.PrincipalName
+	}
+	return ""
+}
+
+func (x *SetSettingRequest) GetEmailDomain() string {
+	if x != nil {
+		return x.EmailDomain
+	}
+	return ""
+}
+
+func (x *SetSettingRequest) GetAllowRegister() bool {
+	if x != nil {
+		return x.AllowRegister
+	}
+	return false
+}
+
+func (x *SetSettingRequest) GetAllowChangeDevice() bool {
+	if x != nil {
+		return x.AllowChangeDevice
+	}
+	return false
+}
+
+func (x *SetSettingRequest) GetRestrictClockInIp() bool {
+	if x != nil {
+		return x.RestrictClockInIp
+	}
+	return false
+}
+
+func (x *SetSettingRequest) GetRestrictIpList() string {
+	if x != nil {
+		return x.RestrictIpList
+	}
+	return ""
+}
+
+func (x *SetSettingRequest) GetRestrictEmailDomain() bool {
+	if x != nil {
+		return x.RestrictEmailDomain
+	}
+	return false
+}
+
+type SetSettingResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SetSettingResponse) Reset() {
+	*x = SetSettingResponse{}
+	mi := &file_api_setting_setting_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SetSettingResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SetSettingResponse) ProtoMessage() {}
+
+func (x *SetSettingResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_setting_setting_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SetSettingResponse.ProtoReflect.Descriptor instead.
+func (*SetSettingResponse) Descriptor() ([]byte, []int) {
+	return file_api_setting_setting_proto_rawDescGZIP(), []int{3}
+}
+
 var File_api_setting_setting_proto protoreflect.FileDescriptor
 
 const file_api_setting_setting_proto_rawDesc = "" +
@@ -172,10 +308,23 @@ const file_api_setting_setting_proto_rawDesc = "" +
 	"\x13allow_change_device\x18\x05 \x01(\bR\x11allowChangeDevice\x12/\n" +
 	"\x14restrict_clock_in_ip\x18\x06 \x01(\bR\x11restrictClockInIp\x12(\n" +
 	"\x10restrict_ip_list\x18\a \x01(\tR\x0erestrictIpList\x122\n" +
-	"\x15restrict_email_domain\x18\b \x01(\bR\x13restrictEmailDomain2W\n" +
+	"\x15restrict_email_domain\x18\b \x01(\bR\x13restrictEmailDomain\"\xe4\x02\n" +
+	"\x11SetSettingRequest\x12\x1f\n" +
+	"\vschool_name\x18\x01 \x01(\tR\n" +
+	"schoolName\x12%\n" +
+	"\x0eprincipal_name\x18\x02 \x01(\tR\rprincipalName\x12!\n" +
+	"\femail_domain\x18\x03 \x01(\tR\vemailDomain\x12%\n" +
+	"\x0eallow_register\x18\x04 \x01(\bR\rallowRegister\x12.\n" +
+	"\x13allow_change_device\x18\x05 \x01(\bR\x11allowChangeDevice\x12/\n" +
+	"\x14restrict_clock_in_ip\x18\x06 \x01(\bR\x11restrictClockInIp\x12(\n" +
+	"\x10restrict_ip_list\x18\a \x01(\tR\x0erestrictIpList\x122\n" +
+	"\x15restrict_email_domain\x18\b \x01(\bR\x13restrictEmailDomain\"\x14\n" +
+	"\x12SetSettingResponse2\x9e\x01\n" +
 	"\x0eSettingService\x12E\n" +
 	"\n" +
-	"GetSetting\x12\x1a.setting.GetSettingRequest\x1a\x1b.setting.GetSettingResponseB\x15Z\x13api/setting;settingb\x06proto3"
+	"GetSetting\x12\x1a.setting.GetSettingRequest\x1a\x1b.setting.GetSettingResponse\x12E\n" +
+	"\n" +
+	"SetSetting\x12\x1a.setting.SetSettingRequest\x1a\x1b.setting.SetSettingResponseB\x15Z\x13api/setting;settingb\x06proto3"
 
 var (
 	file_api_setting_setting_proto_rawDescOnce sync.Once
@@ -189,16 +338,20 @@ func file_api_setting_setting_proto_rawDescGZIP() []byte {
 	return file_api_setting_setting_proto_rawDescData
 }
 
-var file_api_setting_setting_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_api_setting_setting_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_api_setting_setting_proto_goTypes = []any{
 	(*GetSettingRequest)(nil),  // 0: setting.GetSettingRequest
 	(*GetSettingResponse)(nil), // 1: setting.GetSettingResponse
+	(*SetSettingRequest)(nil),  // 2: setting.SetSettingRequest
+	(*SetSettingResponse)(nil), // 3: setting.SetSettingResponse
 }
 var file_api_setting_setting_proto_depIdxs = []int32{
 	0, // 0: setting.SettingService.GetSetting:input_type -> setting.GetSettingRequest
-	1, // 1: setting.SettingService.GetSetting:output_type -> setting.GetSettingResponse
-	1, // [1:2] is the sub-list for method output_type
-	0, // [0:1] is the sub-list for method input_type
+	2, // 1: setting.SettingService.SetSetting:input_type -> setting.SetSettingRequest
+	1, // 2: setting.SettingService.GetSetting:output_type -> setting.GetSettingResponse
+	3, // 3: setting.SettingService.SetSetting:output_type -> setting.SetSettingResponse
+	2, // [2:4] is the sub-list for method output_type
+	0, // [0:2] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -215,7 +368,7 @@ func file_api_setting_setting_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_api_setting_setting_proto_rawDesc), len(file_api_setting_setting_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
